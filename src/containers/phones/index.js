@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {fetchPhones} from '../../actions';
 
 class Phones extends Component {
-  componentDidmount() {
+  componentDidMount() {
     this.props.fetchPhones();
   }
 
