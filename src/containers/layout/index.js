@@ -4,7 +4,7 @@ import Phones from '../phones';
 import { Container, Grid } from 'semantic-ui-react';
 
 const Layout = ({children}) => (
-  <Container>
+  <Container className="main">
     <Grid>
       <Grid.Column width={4}>
         Sidebar
