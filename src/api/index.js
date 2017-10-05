@@ -7,3 +7,11 @@ export const fetchPhones = async () => {
     }, 800)
   })
 };
+
+export const loadMorePhones = async ({ offset }) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(phones);
+    }, 800)
+  })
+};

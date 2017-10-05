@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchPhones } from '../../actions';
+import { fetchPhones, loadMorePhones } from '../../actions';
 import { getPhones } from '../../selectors';
 
 import R from 'ramda';
 
-import { Grid, Card, Button, Image, Icon } from 'semantic-ui-react';
+import { Grid, Card, Button, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 
@@ -49,11 +49,10 @@ class Phones extends Component {
             </Card.Content>
             <Card.Content extra>
               <Button
-                  className={"ui"}
                   primary
                   inverted
                   fluid
-                  color={'green'}
+                  color="green"
               >
                 Buy Now!
               </Button>
@@ -63,14 +62,33 @@ class Phones extends Component {
     )
   }
 
-
   render() {
-    const { phones } = this.props;
+    const { phones, loadMorePhones } = this.props;
 
     return (
-        <Grid className="padded" columns={3}>
-          {phones.map((phone, index) => this.renderPhone(phone, index))}
-        </Grid>
+        <div>
+          <Grid
+              columns={3}
+              padded
+              doubling
+          >
+            {phones.map((phone, index) => this.renderPhone(phone, index))}
+            <Grid.Row centered>
+              <Grid.Column textAlign={"centered"}>
+                <Button
+                    icon="chevron down"
+                    raised
+                    circular
+                    color="green"
+                    onClick={loadMorePhones}
+                >
+                </Button>
+              </Grid.Column>
+
+            </Grid.Row>
+          </Grid>
+
+        </div>
     );
   }
 }
@@ -80,7 +98,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  fetchPhones
+  fetchPhones,
+  loadMorePhones
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Phones);
