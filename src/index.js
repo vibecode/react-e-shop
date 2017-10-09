@@ -18,9 +18,7 @@ function render(Component) {
   ReactDOM.render(
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <div>
-            {Component}
-          </div>
+          {Component}
         </ConnectedRouter>
       </Provider>,
       rootElement

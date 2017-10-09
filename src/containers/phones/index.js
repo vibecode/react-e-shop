@@ -74,10 +74,9 @@ class Phones extends Component {
           >
             {phones.map((phone, index) => this.renderPhone(phone, index))}
             <Grid.Row centered>
-              <Grid.Column textAlign={"centered"}>
+              <Grid.Column textAlign={"center"}>
                 <Button
                     icon="chevron down"
-                    raised
                     circular
                     color="green"
                     onClick={loadMorePhones}
