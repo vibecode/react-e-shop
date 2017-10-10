@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchPhones, loadMorePhones } from '../../actions';
+import {
+  fetchPhones,
+  loadMorePhones,
+  addPhoneToBasket,
+} from '../../actions';
+
 import { getPhones } from '../../selectors';
 
 import R from 'ramda';
@@ -26,6 +31,7 @@ class Phones extends Component {
     //R.take(2, ['foo', 'bar', 'baz']); //=> ['foo', 'bar']
     //R.take(3, 'ramda');               //=> 'ram'
     const shortDescription = `${R.take(60, phone.description)}...`;
+    const { addPhoneToBasket } = this.props;
 
     return (
         <Grid.Column key={index}>
@@ -53,6 +59,7 @@ class Phones extends Component {
                   inverted
                   fluid
                   color="green"
+                  onClick={() => addPhoneToBasket(phone.id)}
               >
                 Buy Now!
               </Button>
@@ -83,7 +90,6 @@ class Phones extends Component {
                 >
                 </Button>
               </Grid.Column>
-
             </Grid.Row>
           </Grid>
 
@@ -96,9 +102,11 @@ const mapStateToProps = state => ({
   phones: getPhones(state)
 });
 
+
 const mapDispatchToProps = {
   fetchPhones,
-  loadMorePhones
+  loadMorePhones,
+  addPhoneToBasket
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Phones);

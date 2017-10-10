@@ -7,7 +7,8 @@ import {
   LOAD_MORE_PHONES_FAILURE,
   FETCH_PHONE_BY_ID_START,
   FETCH_PHONE_BY_ID_SUCCESS,
-  FETCH_PHONE_BY_ID_FAILURE
+  FETCH_PHONE_BY_ID_FAILURE,
+  ADD_PHONE_TO_BASKET
 } from '../constants/actionTypes';
 
 import {
@@ -78,5 +79,12 @@ export const fetchPhoneById = id => async dispatch => {
       payload: err,
       error: true
     })
+  }
+};
+
+export const addPhoneToBasket = id => {
+  return {
+    type: ADD_PHONE_TO_BASKET,
+    payload: id
   }
 };

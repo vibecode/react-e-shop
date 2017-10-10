@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import BasketCart from '../../containers/basketCart';
 import { connect } from 'react-redux';
-import { fetchPhoneById } from '../../actions';
+import { fetchPhoneById, addPhoneToBasket } from '../../actions';
 import { getPhoneById } from '../../selectors';
-import { Container, Grid, Image } from 'semantic-ui-react';
+import { Container, Grid, Image, Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import R from 'ramda';
 
 class Phone extends Component {
@@ -40,10 +42,17 @@ class Phone extends Component {
 
   renderFields() {
     const { phone } = this.props;
-    console.log(phone);
 
+    //R.compose
+    //Performs right-to-left function composition.
+    //The rightmost function may have any arity;
+    //the remaining functions must be unary.
+    //Note: The result of compose is not automatically curried.
     const columnFields = R.compose(
         R.toPairs,
+        //R.pick
+        //Returns a partial copy of an object containing only the keys specified.
+        // If the key does not exist, the property is ignored.
         R.pick([
           'cpu',
           'camera',
@@ -68,8 +77,21 @@ class Phone extends Component {
   }
 
   renderSidebar() {
+    const { phone, addPhoneToBasket } = this.props;
+
     return (
-        <div>Sidebar</div>
+        <div>
+          <p>Quick Shop</p>
+          <BasketCart />
+          <div>
+            <h1>{phone.name}</h1>
+            <h2>{phone.price}</h2>
+          </div>
+          <Link to='/'>Home</Link>
+          <Button onClick={() => addPhoneToBasket(phone.id)}>
+          Add to cart
+          </Button>
+        </div>
     )
   }
 
@@ -98,7 +120,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  fetchPhoneById
+  fetchPhoneById,
+  addPhoneToBasket
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Phone);
