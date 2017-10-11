@@ -1,5 +1,6 @@
 import phones from './mockPhones';
 import R from 'ramda';
+import categories from './mockCategories';
 
 export const fetchPhones = async () => {
   return new Promise((resolve) => {
@@ -14,6 +15,12 @@ export const loadMorePhones = async ({ offset }) => {
     setTimeout(() => {
       resolve(phones);
     }, 800)
+  })
+};
+
+export const fetchCategories = async () => {
+  return new Promise((resolve, reject) => {
+    resolve(categories);
   })
 };
 

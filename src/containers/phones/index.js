@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import {
   fetchPhones,
+  fetchCategories,
   loadMorePhones,
   addPhoneToBasket,
 } from '../../actions';
@@ -14,10 +15,10 @@ import R from 'ramda';
 import { Grid, Card, Button, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-
 class Phones extends Component {
   componentDidMount() {
     this.props.fetchPhones();
+    this.props.fetchCategories();
   }
 
   renderPhone(phone, index) {
@@ -92,7 +93,6 @@ class Phones extends Component {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-
         </div>
     );
   }
@@ -102,9 +102,9 @@ const mapStateToProps = state => ({
   phones: getPhones(state)
 });
 
-
 const mapDispatchToProps = {
   fetchPhones,
+  fetchCategories,
   loadMorePhones,
   addPhoneToBasket
 };

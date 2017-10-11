@@ -17,13 +17,13 @@ class Search extends Component {
 
   handleChange (ev) {
     this.setState({
-      value: ev.target.value
+      value: ev.target.value.trim()
     })
   }
 
   handleSubmit(ev) {
     ev.preventDefault();
-    this.props.searchPhone(this.state.value);
+    this.props.searchPhone(this.state.value.toLowerCase());
   }
 
   render() {
@@ -33,6 +33,7 @@ class Search extends Component {
           <div>
             <form onSubmit={this.handleSubmit}>
               <Input
+                  value={this.state.value}
                   onChange={this.handleChange}
                   type='text'
                   className='form-control'

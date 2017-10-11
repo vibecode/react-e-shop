@@ -10,7 +10,7 @@ export const getPhoneById = (state, id) => R.prop(id, state.phones);
 export const getPhones = state => {
   const applySearch = item => R.contains(
       state.phonesPage.search,
-      R.prop('name', item)
+      R.prop('name', item).toLowerCase()
   );
 
   return R.compose(

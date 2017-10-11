@@ -13,6 +13,7 @@ const Layout = ({children}) => (
       <Grid.Column width={12}>
         {children}
         <Route component={Phones} />
+        <Route path='/categories/:id' component={Phones}/>
       </Grid.Column>
     </Grid>
   </Container>);
