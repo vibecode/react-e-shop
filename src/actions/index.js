@@ -8,7 +8,8 @@ import {
   FETCH_PHONE_BY_ID_START,
   FETCH_PHONE_BY_ID_SUCCESS,
   FETCH_PHONE_BY_ID_FAILURE,
-  ADD_PHONE_TO_BASKET
+  ADD_PHONE_TO_BASKET,
+  SEARCH_PHONE,
 } from '../constants/actionTypes';
 
 import {
@@ -88,3 +89,12 @@ export const addPhoneToBasket = id => {
     payload: id
   }
 };
+
+export const searchPhone = text => {
+  console.log(text);
+  return {
+    type: SEARCH_PHONE,
+    payload: text
+  }
+};
+

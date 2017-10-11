@@ -8,7 +8,15 @@ import R from 'ramda';
 export const getPhoneById = (state, id) => R.prop(id, state.phones);
 
 export const getPhones = state => {
-  return R.map(id => getPhoneById(state, id), state.phonesPage.ids);
+  const applySearch = item => R.contains(
+      state.phonesPage.search,
+      R.prop('name', item)
+  );
+
+  return R.compose(
+      R.filter(applySearch),
+      R.map(id => getPhoneById(state, id))
+  )(state.phonesPage.ids);
 };
 
 //R.length
