@@ -7,14 +7,23 @@ import R from 'ramda';
 //R.prop('x', {}); //=> undefined
 export const getPhoneById = (state, id) => R.prop(id, state.phones);
 
-export const getPhones = state => {
+export const getPhones = (state, ownProps) => {
+  console.log(ownProps);
+  const activeCategoryId = getActiveCategoryId(ownProps);
+
   const applySearch = item => R.contains(
       state.phonesPage.search,
       R.prop('name', item).toLowerCase()
   );
 
+  const applyCategory = item => R.equals(
+      activeCategoryId,
+      R.prop('categoryId', item)
+  );
+
   return R.compose(
       R.filter(applySearch),
+      R.when(R.always(activeCategoryId), R.filter(applyCategory)),
       R.map(id => getPhoneById(state, id))
   )(state.phonesPage.ids);
 };
@@ -39,3 +48,16 @@ export const getTotalBasketPrice = state => {
       R.map(id => getPhoneById(state, id))
   )(state.basket);
 };
+
+//R.values
+//Returns a list of all the enumerable own properties of the supplied object.
+//Note that the order of the output array is not guaranteed across different JS platforms.
+export const getCategories = state => R.values(state.categories);
+
+//R.path
+//Retrieve the value at a given path.
+//R.path(['a', 'b'], {a: {b: 2}}); //=> 2
+//R.path(['a', 'b'], {c: {b: 2}}); //=> undefined
+export const getActiveCategoryId = ownProps => R.path(['match', 'params', 'id'], ownProps);
+
+
