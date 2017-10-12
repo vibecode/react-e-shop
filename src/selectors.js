@@ -8,7 +8,6 @@ import R from 'ramda';
 export const getPhoneById = (state, id) => R.prop(id, state.phones);
 
 export const getPhones = (state, ownProps) => {
-  console.log(ownProps);
   const activeCategoryId = getActiveCategoryId(ownProps);
 
   const applySearch = item => R.contains(
@@ -23,6 +22,16 @@ export const getPhones = (state, ownProps) => {
 
   return R.compose(
       R.filter(applySearch),
+      //R.when
+      //Tests the final argument by passing it to the given predicate function.
+      //If the predicate is satisfied, the function will return the result of calling the whenTrueFn function with the same argument.
+      //If the predicate is not satisfied, the argument is returned as is.
+
+      //R.always
+      //Returns a function that always returns the given value.
+      //Note that for non-primitives the value returned is a reference to the original value.
+      //This function is known as const, constant, or K (for K combinator) in other languages and libraries.
+      //In case below we need it only because 'when' requires function as a predicate
       R.when(R.always(activeCategoryId), R.filter(applyCategory)),
       R.map(id => getPhoneById(state, id))
   )(state.phonesPage.ids);
