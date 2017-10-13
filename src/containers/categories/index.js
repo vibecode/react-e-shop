@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getCategories, getActiveCategoryId } from '../../selectors';
+import { getCategories } from '../../selectors';
 import { NavLink, withRouter } from 'react-router-dom';
 
 const Categories = ({ categories }) => {

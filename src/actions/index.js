@@ -12,6 +12,7 @@ import {
   FETCH_CATEGORIES_SUCCESS,
   FETCH_CATEGORIES_FAILURE,
   ADD_PHONE_TO_BASKET,
+  REMOVE_PHONE_FROM_BASKET,
   SEARCH_PHONE,
 } from '../constants/actionTypes';
 
@@ -113,10 +114,19 @@ export const addPhoneToBasket = id => {
   }
 };
 
+export const removePhoneFromBasket = id => async dispatch => {
+  console.log(id);
+  dispatch({
+    type: REMOVE_PHONE_FROM_BASKET,
+    payload: id
+  })
+};
+
 export const searchPhone = text => {
   return {
     type: SEARCH_PHONE,
     payload: text
   }
 };
+
 

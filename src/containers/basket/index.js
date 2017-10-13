@@ -5,10 +5,14 @@ import {
   getBasketPhonesWithCount
 } from '../../selectors';
 import R from 'ramda';
-import { Container, Grid } from 'semantic-ui-react';
+import { Container, Grid, Button } from 'semantic-ui-react';
+import {
+  removePhoneFromBasket
+} from '../../actions';
 
-const Basket = ({ phones, totalPrice }) => {
+const Basket = ({ phones, totalPrice, removePhoneFromBasket }) => {
   const isBasketEmpty = R.isEmpty(phones);
+
   const renderContent = () => {
     return (
         <div>
@@ -30,7 +34,10 @@ const Basket = ({ phones, totalPrice }) => {
                     <td>${phone.price}</td>
                     <td>{phone.count}</td>
                     <td>
-                      <span>delete</span>
+                      <Button
+                          onClick={() => removePhoneFromBasket(phone.id)}
+                      >X
+                      </Button>
                     </td>
                   </tr>
               ))}
@@ -79,5 +86,8 @@ const mapStateToProps = state => {
   }
 };
 
-export default connect(mapStateToProps, null)(Basket);
+const mapDispatchToProps = {
+  removePhoneFromBasket
+};
 
+export default connect(mapStateToProps, mapDispatchToProps)(Basket);
