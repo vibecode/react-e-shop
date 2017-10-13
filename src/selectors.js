@@ -1,5 +1,6 @@
 import R from 'ramda';
 
+//TODO: try to use pipe instead of compose where possible for readability
 //R.prop
 //Returns a function that when supplied an object
 //returns the indicated property of that object, if it exists.
@@ -58,6 +59,29 @@ export const getTotalBasketPrice = state => {
   )(state.basket);
 };
 
+export const getBasketPhonesWithCount = state => {
+  const phoneCount = id => R.compose(
+      R.length,
+      R.filter(basketId => R.equals(id, basketId))
+  )(state.basket);
+
+  //R.assoc
+  //Makes a shallow clone of an object, setting or overriding the specified property with the given value.
+  //Note that this copies and flattens prototype properties onto the new object as well.
+  //All non-primitive properties are copied by reference.
+  const phoneWithCount = phone => R.assoc('count', phoneCount(phone.id), phone);
+
+  //R.uniq
+  //Returns a new list containing only one copy of each element in the original list.
+  //R.equals is used to determine equality.
+  const uniqueIds = R.uniq(state.basket);
+
+  return R.compose(
+      R.map(phoneWithCount),
+      R.map(id => getPhoneById(state, id))
+  )(uniqueIds);
+};
+
 //R.values
 //Returns a list of all the enumerable own properties of the supplied object.
 //Note that the order of the output array is not guaranteed across different JS platforms.
@@ -68,5 +92,3 @@ export const getCategories = state => R.values(state.categories);
 //R.path(['a', 'b'], {a: {b: 2}}); //=> 2
 //R.path(['a', 'b'], {c: {b: 2}}); //=> undefined
 export const getActiveCategoryId = ownProps => R.path(['match', 'params', 'id'], ownProps);
-
-
