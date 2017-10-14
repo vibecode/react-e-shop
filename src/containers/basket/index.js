@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import {Link} from 'react-router-dom';
 import {
   getTotalBasketPrice,
   getBasketPhonesWithCount
@@ -7,10 +8,12 @@ import {
 import R from 'ramda';
 import { Container, Grid, Button } from 'semantic-ui-react';
 import {
-  removePhoneFromBasket
+  removePhoneFromBasket,
+  basketCheckout,
+  cleanBasket
 } from '../../actions';
 
-const Basket = ({ phones, totalPrice, removePhoneFromBasket }) => {
+const Basket = ({ phones, totalPrice, removePhoneFromBasket, cleanBasket, basketCheckout }) => {
   const isBasketEmpty = R.isEmpty(phones);
 
   const renderContent = () => {
@@ -61,7 +64,25 @@ const Basket = ({ phones, totalPrice, removePhoneFromBasket }) => {
 
   const renderSidebar = () => (
       <div>
-        Sidebar
+        <Link to='/' >
+          <span>Continue shopping!</span>
+        </Link>
+        {
+          R.not(isBasketEmpty) &&
+          <div>
+            <Button
+                onClick={cleanBasket}
+            >
+              Clear cart
+            </Button>
+
+            <Button
+                onClick={() => basketCheckout(phones)}
+            >
+              Checkout
+            </Button>
+          </div>
+        }
       </div>
   );
 
@@ -87,7 +108,9 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  removePhoneFromBasket
+  removePhoneFromBasket,
+  basketCheckout,
+  cleanBasket
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Basket);

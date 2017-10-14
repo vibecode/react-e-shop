@@ -2,7 +2,8 @@ import R from 'ramda';
 
 import {
   ADD_PHONE_TO_BASKET,
-  REMOVE_PHONE_FROM_BASKET
+  REMOVE_PHONE_FROM_BASKET,
+  CLEAN_BASKET
 } from '../constants/actionTypes';
 
 export default (state = [], { type, payload }) => {
@@ -17,10 +18,11 @@ export default (state = [], { type, payload }) => {
     case REMOVE_PHONE_FROM_BASKET:
       //R.without
       //Returns a new list without values in the first argument. R.equals is used to determine equality.
-
       //R.of
       //Returns a singleton array containing the value provided.
       return R.without(R.of(payload), state);
+    case CLEAN_BASKET:
+      return [];
     default:
       return state
   }

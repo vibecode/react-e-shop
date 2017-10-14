@@ -13,6 +13,7 @@ import {
   FETCH_CATEGORIES_FAILURE,
   ADD_PHONE_TO_BASKET,
   REMOVE_PHONE_FROM_BASKET,
+  CLEAN_BASKET,
   SEARCH_PHONE,
 } from '../constants/actionTypes';
 
@@ -121,6 +122,17 @@ export const removePhoneFromBasket = id => async dispatch => {
     payload: id
   })
 };
+
+export const cleanBasket = () => {
+ return {
+    type: CLEAN_BASKET
+  }
+};
+
+export const basketCheckout = phones => () => {
+  alert(JSON.stringify(phones));
+};
+
 
 export const searchPhone = text => {
   return {
