@@ -1,6 +1,5 @@
 import R from 'ramda';
 
-//TODO: try to use pipe instead of compose where possible for readability
 //R.prop
 //Returns a function that when supplied an object
 //returns the indicated property of that object, if it exists.
@@ -21,8 +20,8 @@ export const getPhones = (state, ownProps) => {
       R.prop('categoryId', item)
   );
 
-  return R.compose(
-      R.filter(applySearch),
+  return R.pipe(
+      R.map(id => getPhoneById(state, id)),
       //R.when
       //Tests the final argument by passing it to the given predicate function.
       //If the predicate is satisfied, the function will return the result of calling the whenTrueFn function with the same argument.
@@ -34,7 +33,7 @@ export const getPhones = (state, ownProps) => {
       //This function is known as const, constant, or K (for K combinator) in other languages and libraries.
       //In case below we need it only because 'when' requires function as a predicate
       R.when(R.always(activeCategoryId), R.filter(applyCategory)),
-      R.map(id => getPhoneById(state, id))
+      R.filter(applySearch),
   )(state.phonesPage.ids);
 };
 
@@ -45,24 +44,24 @@ export const getRenderedPhonesLength = state => R.length(state.phonesPage.ids);
 export const getTotalBasketCount = state => R.length(state.basket);
 
 export const getTotalBasketPrice = state => {
-  return R.compose(
-      //R.sum
-      //Adds together all the elements of a list.
-      R.sum,
+  return R.pipe(
+      R.map(id => getPhoneById(state, id)),
       //R.pluck
       //Returns a new list by plucking the same named property off all objects in the list supplied.
       //R.pluck('a')([{a: 1}, {a: 2}]); //=> [1, 2]
       //R.pluck(0)([[1, 2], [3, 4]]);   //=> [1, 3]
       //R.pluck('val', {a: {val: 3}, b: {val: 5}}); //=> {a: 3, b: 5}
       R.pluck('price'),
-      R.map(id => getPhoneById(state, id))
+      //R.sum
+      //Adds together all the elements of a list.
+      R.sum
   )(state.basket);
 };
 
 export const getBasketPhonesWithCount = state => {
-  const phoneCount = id => R.compose(
-      R.length,
-      R.filter(basketId => R.equals(id, basketId))
+  const phoneCount = id => R.pipe(
+      R.filter(basketId => R.equals(id, basketId)),
+      R.length
   )(state.basket);
 
   //R.assoc
@@ -76,9 +75,9 @@ export const getBasketPhonesWithCount = state => {
   //R.equals is used to determine equality.
   const uniqueIds = R.uniq(state.basket);
 
-  return R.compose(
-      R.map(phoneWithCount),
-      R.map(id => getPhoneById(state, id))
+  return R.pipe(
+      R.map(id => getPhoneById(state, id)),
+      R.map(phoneWithCount)
   )(uniqueIds);
 };
 
