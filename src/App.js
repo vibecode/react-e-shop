@@ -10,7 +10,7 @@ import { Menu, Container, Grid } from 'semantic-ui-react';
 class App extends Component {
   render() {
     return (
-        <Container className="App">
+        <div>
           <Menu fixed='top'>
             <Container>
               <Menu.Item as='a'>
@@ -26,16 +26,16 @@ class App extends Component {
               <Menu.Item position={"right"}>
                 <BasketCart />
               </Menu.Item>
-
             </Container>
           </Menu>
-
-          <Switch>
-            <Route path="/phones/:id" component={Phone} />
-            <Route path='/basket' component={Basket} />
-            <Route path="/" component={Layout} />
-          </Switch>
-        </Container>
+          <Container className="main">
+            <Switch>
+              <Route path="/phones/:id" component={Phone} />
+              <Route path='/basket' component={Basket} />
+              <Route path="/" component={Layout} />
+            </Switch>
+          </Container>
+        </div>
     );
   }
 }
