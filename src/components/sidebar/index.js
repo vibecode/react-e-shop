@@ -1,15 +1,12 @@
 import React from 'react';
-import BasketCart from '../../containers/basketCart';
-import Search from '../../containers/search';
 import Categories from '../../containers/categories';
+import { Menu } from 'semantic-ui-react';
 
 const Sidebar = () => {
   return (
-      <div>
-        <BasketCart />
-        <Search />
+      <Menu vertical fluid>
         <Categories />
-      </div>
+      </Menu>
   )
 };
 

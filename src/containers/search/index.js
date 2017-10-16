@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Input } from 'semantic-ui-react';
+import { Button, Input, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { searchPhone } from '../../actions';
 
@@ -28,20 +28,15 @@ class Search extends Component {
 
   render() {
     return (
-        <div>
-          <h3 className='lead'>Quick shop</h3>
-          <div>
             <form onSubmit={this.handleSubmit}>
               <Input
-                  value={this.state.value}
+                  fluid
                   onChange={this.handleChange}
-                  type='text'
-                  className='form-control'
+                  type="text"
+                  action="Search"
+                  placeholder='Search...'
               />
-              <Button>Search</Button>
             </form>
-          </div>
-        </div>
     )
   }
 }
