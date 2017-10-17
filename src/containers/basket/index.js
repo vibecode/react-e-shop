@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   getTotalBasketPrice,
   getBasketPhonesWithCount
 } from '../../selectors';
 import R from 'ramda';
-import { Container, Grid, Button } from 'semantic-ui-react';
+import { Container, Grid, Button, Table, Image, Icon } from 'semantic-ui-react';
 import {
   removePhoneFromBasket,
   basketCheckout,
@@ -18,73 +18,51 @@ const Basket = ({ phones, totalPrice, removePhoneFromBasket, cleanBasket, basket
 
   const renderContent = () => {
     return (
-        <div>
-          {isBasketEmpty && <div>Your shopping cart is empty</div>}
-
-          <div className='table-responsive'>
-            <table className='table-bordered table-striped table-condensed cf'>
-              <tbody>
+        <div className="basketContainer">
+          {isBasketEmpty ? <h2>Your shopping cart is empty</h2> : <Table celled>
+            <Table.Body>
               {phones.map((phone) => (
-                  <tr key={phone.id}>
-                    <td>
-                      <img
-                          className='img-thumbnail'
+                  <Table.Row key={phone.id}>
+                    <Table.Cell>
+                      <Image
+                          size="tiny"
                           src={phone.image}
                           alt={phone.name}
                       />
-                    </td>
-                    <td>{phone.name}</td>
-                    <td>${phone.price}</td>
-                    <td>{phone.count}</td>
-                    <td>
-                      <Button
+                    </Table.Cell>
+                    <Table.Cell>{phone.name}</Table.Cell>
+                    <Table.Cell textAlign="center">${phone.price}</Table.Cell>
+                    <Table.Cell textAlign="center">{phone.count}</Table.Cell>
+                    <Table.Cell textAlign="center">
+                      <Icon
+                          name="delete"
+                          link
+                          size="large"
                           onClick={() => removePhoneFromBasket(phone.id)}
-                      >X
-                      </Button>
-                    </td>
-                  </tr>
+                      >
+                      </Icon>
+                    </Table.Cell>
+                  </Table.Row>
               ))}
-              </tbody>
-            </table>
-          </div>
-          {
-            //R.not
-            //A function that returns the ! of its argument. It will return true when passed false-y value, and false when passed a truth-y one.
-            R.not(isBasketEmpty) &&
-            <div>
-              <div>
-                <b>Total:</b>
-                ${totalPrice}
-              </div>
-            </div>
+            </Table.Body>
+            {
+              //R.not
+              //A function that returns the ! of its argument. It will return true when passed false-y value, and false when passed a truth-y one.
+              R.not(isBasketEmpty) &&
+              <Table.Row celled>
+                <Table.Cell textAlign="right" colSpan={5}>
+                  <span className="priceTotal"><b>Total: </b>${totalPrice}</span>
+                  <Button onClick={() => basketCheckout(phones)}>
+                    Checkout
+                  </Button>
+                </Table.Cell>
+              </Table.Row>
+            }
+          </Table>
           }
         </div>
     )
   };
-
-  const renderSidebar = () => (
-      <div>
-        <Link to='/' >
-          <span>Continue shopping!</span>
-        </Link>
-        {
-          R.not(isBasketEmpty) &&
-          <div>
-            <Button
-                onClick={cleanBasket}
-            >
-              Clear cart
-            </Button>
-
-            <Button
-                onClick={() => basketCheckout(phones)}
-            >
-              Checkout
-            </Button>
-          </div>
-        }
-      </div>
-  );
 
   return (
       <Container>
@@ -93,7 +71,18 @@ const Basket = ({ phones, totalPrice, removePhoneFromBasket, cleanBasket, basket
             {renderContent()}
           </Grid.Column>
           <Grid.Column width={4}>
-            {renderSidebar()}
+            <Link
+                to='/'
+                className="ui fluid button green continue"
+            >
+              Continue shopping!
+            </Link>
+            {
+              R.not(isBasketEmpty) &&
+              <Button fluid onClick={cleanBasket}>
+                Clear cart
+              </Button>
+            }
           </Grid.Column>
         </Grid>
       </Container>
