@@ -89,7 +89,7 @@ class Phone extends Component {
           </div>
           <Link to='/'>Home</Link>
           <Button onClick={() => addPhoneToBasket(phone.id)}>
-          Add to cart
+            Add to cart
           </Button>
         </div>
     )

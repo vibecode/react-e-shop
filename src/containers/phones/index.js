@@ -12,7 +12,7 @@ import { getPhones } from '../../selectors';
 
 import R from 'ramda';
 
-import { Grid, Card, Button, Image } from 'semantic-ui-react';
+import { Grid, Card, Button, Image, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 class Phones extends Component {
@@ -56,13 +56,15 @@ class Phones extends Component {
             </Card.Content>
             <Card.Content extra>
               <Button
-                  primary
-                  inverted
+                  animated="vertical"
                   fluid
                   color="green"
                   onClick={() => addPhoneToBasket(phone.id)}
               >
-                Buy Now!
+                <Button.Content hidden>Add to cart</Button.Content>
+                <Button.Content visible>
+                  <Icon name="shop" />
+                </Button.Content>
               </Button>
             </Card.Content>
           </Card>
@@ -77,7 +79,6 @@ class Phones extends Component {
         <div>
           <Grid
               columns={3}
-              padded
               doubling
           >
             {phones.map((phone, index) => this.renderPhone(phone, index))}

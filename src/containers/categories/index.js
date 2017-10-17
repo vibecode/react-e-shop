@@ -5,35 +5,34 @@ import { NavLink, withRouter } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 
 const Categories = ({ categories }) => {
-  const activeStyle = { color: 'red', fontWeight: 'bold' };
+  const activeStyle = { fontWeight: 'bold' };
 
   const renderCategory = (category) => {
     return (
-        <Menu.Item key={category.id}>
-          <NavLink
-              to={`/categories/${category.id}`}
-              activeStyle={activeStyle}>
-            {category.name}
-          </NavLink>
-        </Menu.Item>
+        <NavLink
+            key={category.id}
+            className="item"
+            to={`/categories/${category.id}`}
+            activeStyle={activeStyle}>
+          {category.name}
+        </NavLink>
     )
   };
 
   return (
-      <div>
-        <Menu.Header>
-          <h4>Brand</h4>
-        </Menu.Header>
-        <Menu.Item>
-          <NavLink
-              to="/"
-              exact
-              activeStyle={activeStyle}>
-            All Brands
-          </NavLink>
+      <Menu vertical fluid>
+        <Menu.Item header>
+          <h3>Categories</h3>
         </Menu.Item>
+        <NavLink
+            className="item"
+            to="/"
+            exact
+            activeStyle={activeStyle}>
+          All Brands
+        </NavLink>
         {categories.map((category, index) => renderCategory(category, index))}
-      </div>
+      </Menu>
   )
 };
 

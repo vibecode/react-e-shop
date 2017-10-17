@@ -7,7 +7,7 @@ import { Icon } from 'semantic-ui-react';
 const BasketCart = ({ totalBasketCount, totalPrice }) => (
       <div>
         <Link to="/basket">
-          <Icon name='shop' size="large"/>
+          <Icon name='shop' size="large" color="green"/>
           <span>{totalBasketCount} item(s) - ${totalPrice}</span>
         </Link>
       </div>
