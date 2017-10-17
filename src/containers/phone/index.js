@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import BasketCart from '../../containers/basketCart';
 import { connect } from 'react-redux';
 import { fetchPhoneById, addPhoneToBasket } from '../../actions';
 import { getPhoneById } from '../../selectors';
-import { Container, Grid, Image, Button } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Container, Grid, Image, Button, Icon, Table } from 'semantic-ui-react';
 import R from 'ramda';
 
 class Phone extends Component {
@@ -16,27 +14,31 @@ class Phone extends Component {
     const { phone } = this.props;
 
     return (
-        <div>
-          <Grid>
-            <Grid.Column width={6}>
-              <Image
-                  className='img-thumbnail'
-                  src={phone.image}
-                  alt={phone.name}
-              />
-            </Grid.Column>
-            <Grid.Column width={6}>
-              <table>
+        <Grid>
+          <Grid.Column width={6}>
+            <Image
+                bordered
+                shape="rounded"
+                src={phone.image}
+                alt={phone.name}
+            />
+          </Grid.Column>
+
+          <Grid.Column width={10}>
+            <Table definition>
+              <Table.Body>
                 {this.renderFields()}
-              </table>
+              </Table.Body>
+            </Table>
+          </Grid.Column>
+
+          <Grid.Row>
+            <Grid.Column>
+              <h4>{phone.name}</h4>
+              <p>{phone.description}</p>
             </Grid.Column>
-          </Grid>
-          <div className='caption-full'>
-            <h4 className='pull-right'>${phone.price}</h4>
-            <h4>{phone.name}</h4>
-            <p>{phone.description}</p>
-          </div>
-        </div>
+          </Grid.Row>
+        </Grid>
     )
   }
 
@@ -65,14 +67,14 @@ class Phone extends Component {
     )(phone);
 
     return columnFields.map(([key, value]) => (
-        <tr key={key}>
-          <td className='ab-details-title'>
+        <Table.Row key={key}>
+          <Table.Cell>
             {key}
-          </td>
-          <td className='ab-details-info'>
+          </Table.Cell>
+          <Table.Cell>
             {value}
-          </td>
-        </tr>
+          </Table.Cell>
+        </Table.Row>
     ))
   }
 
@@ -81,15 +83,19 @@ class Phone extends Component {
 
     return (
         <div>
-          <p>Quick Shop</p>
-          <BasketCart />
-          <div>
-            <h1>{phone.name}</h1>
-            <h2>{phone.price}</h2>
-          </div>
-          <Link to='/'>Home</Link>
-          <Button onClick={() => addPhoneToBasket(phone.id)}>
-            Add to cart
+          <h1>{phone.name}</h1>
+          <h2>${phone.price}</h2>
+
+          <Button
+              fluid
+              animated="vertical"
+              color="green"
+              onClick={() => addPhoneToBasket(phone.id)}
+          >
+            <Button.Content hidden>Add to cart</Button.Content>
+            <Button.Content visible>
+              <Icon name="shop" />
+            </Button.Content>
           </Button>
         </div>
     )
@@ -99,16 +105,14 @@ class Phone extends Component {
     const { phone } = this.props;
 
     return (
-        <Container className="main">
-          <Grid>
-            <Grid.Column width={12}>
-              {phone && this.renderContent()}
-            </Grid.Column>
-            <Grid.Column width={4}>
-              {phone && this.renderSidebar()}
-            </Grid.Column>
-          </Grid>
-        </Container>
+        <Grid>
+          <Grid.Column width={12}>
+            {phone && this.renderContent()}
+          </Grid.Column>
+          <Grid.Column width={4}>
+            {phone && this.renderSidebar()}
+          </Grid.Column>
+        </Grid>
     )
   }
 }
