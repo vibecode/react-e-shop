@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchPhoneById, addPhoneToBasket } from '../../actions';
 import { getPhoneById } from '../../selectors';
-import { Container, Grid, Image, Button, Icon, Table } from 'semantic-ui-react';
+import { Grid, Image, Button, Icon, Table } from 'semantic-ui-react';
 import R from 'ramda';
 
 class Phone extends Component {

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Button, Input, Icon } from 'semantic-ui-react';
+import { Input } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { searchPhone } from '../../actions';
 
 class Search extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -15,7 +15,7 @@ class Search extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange (ev) {
+  handleChange(ev) {
     this.setState({
       value: ev.target.value.trim()
     })
@@ -28,15 +28,15 @@ class Search extends Component {
 
   render() {
     return (
-            <form onSubmit={this.handleSubmit}>
-              <Input
-                  fluid
-                  onChange={this.handleChange}
-                  type="text"
-                  action="Search"
-                  placeholder='Search...'
-              />
-            </form>
+        <form onSubmit={this.handleSubmit}>
+          <Input
+              fluid
+              onChange={this.handleChange}
+              type="text"
+              action="Search"
+              placeholder='Search...'
+          />
+        </form>
     )
   }
 }
