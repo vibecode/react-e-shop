@@ -1,8 +1,6 @@
-import R from 'ramda';
+import { indexBy, prop, merge } from 'ramda'
 
-import {
-  FETCH_CATEGORIES_SUCCESS
-} from '../constants/actionTypes';
+import { FETCH_CATEGORIES_SUCCESS } from '../constants/actionTypes'
 
 export default (state = {}, { type, payload }) => {
   switch (type) {
@@ -16,9 +14,9 @@ export default (state = {}, { type, payload }) => {
       //var list = [{id: 'xyz', title: 'A'}, {id: 'abc', title: 'B'}];
       //R.indexBy(R.prop('id'), list);
       //=> {abc: {id: 'abc', title: 'B'}, xyz: {id: 'xyz', title: 'A'}}
-      const newValues = R.indexBy(R.prop('id'), payload);
+      const newValues = indexBy(prop('id'), payload)
 
-      return R.merge(state, newValues);
+      return merge(state, newValues)
     default:
       return state
   }

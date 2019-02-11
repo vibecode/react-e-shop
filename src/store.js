@@ -1,17 +1,23 @@
-import { routerMiddleware } from 'react-router-redux';
-import { applyMiddleware, createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { routerMiddleware } from 'connected-react-router'
+import { applyMiddleware, createStore } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import { createBrowserHistory } from 'history'
 
-import thunk from 'redux-thunk';
-import history from './history';
-import reducers from './reducers';
+import thunk from 'redux-thunk'
+import reducers from './reducers'
+
+export const history = createBrowserHistory()
 
 export default (initialState = {}) => {
-  const middleware = applyMiddleware(thunk, routerMiddleware(history));
+  const middleware = applyMiddleware(thunk, routerMiddleware(history))
 
-  const store = createStore(reducers, initialState, composeWithDevTools(middleware));
+  const store = createStore(
+    reducers(history),
+    initialState,
+    composeWithDevTools(middleware)
+  )
 
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== 'production') {
     if (module.hot) {
       module.hot.accept('./reducers', () => {
         store.replaceReducer(reducers)
@@ -19,5 +25,5 @@ export default (initialState = {}) => {
     }
   }
 
-  return store;
-};
+  return store
+}
