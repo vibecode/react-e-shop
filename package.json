@@ -1,7 +1,11 @@
 {
   "name": "react-e-commerce",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "engines": {
+    "node": "^11.1.0",
+    "npm": "6.4.1"
+  },
   "dependencies": {
     "history": "^4.7.2",
     "ramda": "^0.24.1",
