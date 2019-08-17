@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": false,
   "license": "MIT",
+  "engines": {
+    "node": "^12.8.1",
+    "npm": "^6.10.2"
+  },
   "dependencies": {
     "connected-react-router": "^6.3.0",
     "history": "^4.7.2",
